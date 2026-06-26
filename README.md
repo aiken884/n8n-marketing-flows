@@ -38,6 +38,7 @@
 | 03 | 檢查社群貼文敏感字 | LLM | ✅ 已驗證 |
 | 04 | PTT 輿情監測 | HTTP 爬蟲 · LLM · 推播 | ✅ 已驗證 |
 | 05 | 主題→多平台貼文草稿 | LLM | ✅ 已驗證 |
+| 90 | 病毒式社群貼文（反主流公式，[致謝 Hao](./CREDITS.md)） | LLM | ✅ 已驗證 |
 
 > **兩種版本**：`*.json` 為通用版（預設 Claude + Email）；`*.local-ollama.json` 為**免 key 本機版**（呼叫本機 [Ollama](https://ollama.com)、隨用工具直接看輸出、監測類推 Discord webhook）。想用哪種就匯入哪個檔。換 LLM / 換推播管道的作法見 [docs/01](./docs/01-weekly-ai-news-digest.md)。
 
@@ -75,7 +76,7 @@
 
 ## 授權
 
-[MIT](./LICENSE)。隨意用、改、商用，附上著作權聲明即可。
+[MIT](./LICENSE)。隨意用、改、商用，附上著作權聲明即可。部分模板的方法論致謝見 [CREDITS.md](./CREDITS.md)。
 
 ## 貢獻
 
