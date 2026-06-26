@@ -1,6 +1,6 @@
 # Credits / 致謝
 
-## 病毒式社群貼文公式方法論
+## 爆款社群貼文公式方法論
 
 模板 `90-viral-social-post.local-ollama.json` 的爆款框架（反主流鉤子、集體同學感、第一人稱真實 voice、不釣互動）——
 方法論源自 **駱君昊 (Hao / lo.jain.hao)** 的開源 Claude skill：
