@@ -6,7 +6,10 @@
       "parameters": {
         "rule": {
           "interval": [
-            { "field": "cronExpression", "expression": "0 9 * * 1" }
+            {
+              "field": "cronExpression",
+              "expression": "0 9 * * 1"
+            }
           ]
         }
       },
@@ -14,7 +17,10 @@
       "name": "Schedule Trigger",
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
-      "position": [240, 400]
+      "position": [
+        240,
+        400
+      ]
     },
     {
       "parameters": {
@@ -25,7 +31,10 @@
       "name": "RSS Google News",
       "type": "n8n-nodes-base.rssFeedRead",
       "typeVersion": 1.1,
-      "position": [480, 280]
+      "position": [
+        480,
+        280
+      ]
     },
     {
       "parameters": {
@@ -36,7 +45,10 @@
       "name": "RSS Yahoo News",
       "type": "n8n-nodes-base.rssFeedRead",
       "typeVersion": 1.1,
-      "position": [480, 520]
+      "position": [
+        480,
+        520
+      ]
     },
     {
       "parameters": {
@@ -47,7 +59,10 @@
       "name": "Merge",
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3,
-      "position": [720, 400]
+      "position": [
+        720,
+        400
+      ]
     },
     {
       "parameters": {
@@ -57,7 +72,10 @@
       "name": "Prepare News Text",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [940, 400]
+      "position": [
+        940,
+        400
+      ]
     },
     {
       "parameters": {
@@ -65,14 +83,19 @@
         "url": "http://host.docker.internal:11434/api/chat",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ model: 'qwen2.5:latest', messages: [ { role: 'user', content: $json.prompt } ], stream: false }) }}",
-        "options": { "timeout": 180000 }
+        "jsonBody": "={{ JSON.stringify({ model: 'qwen2.5:latest', messages: [ { role: 'system', content: '你是台灣人，一律使用台灣繁體中文與台灣慣用語回覆，絕對不要出現任何簡體字或中國用語。' }, { role: 'user', content: $json.prompt } ], stream: false }) }}",
+        "options": {
+          "timeout": 180000
+        }
       },
       "id": "node-ollama",
       "name": "Summarize with Ollama",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [1160, 400]
+      "position": [
+        1160,
+        400
+      ]
     },
     {
       "parameters": {
@@ -82,7 +105,10 @@
       "name": "Extract Summary",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [1380, 400]
+      "position": [
+        1380,
+        400
+      ]
     },
     {
       "parameters": {
@@ -97,51 +123,100 @@
       "name": "Send to Discord",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [1600, 400]
+      "position": [
+        1600,
+        400
+      ]
     }
   ],
   "connections": {
     "Schedule Trigger": {
       "main": [
         [
-          { "node": "RSS Google News", "type": "main", "index": 0 },
-          { "node": "RSS Yahoo News", "type": "main", "index": 0 }
+          {
+            "node": "RSS Google News",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "RSS Yahoo News",
+            "type": "main",
+            "index": 0
+          }
         ]
       ]
     },
     "RSS Google News": {
       "main": [
-        [ { "node": "Merge", "type": "main", "index": 0 } ]
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
     "RSS Yahoo News": {
       "main": [
-        [ { "node": "Merge", "type": "main", "index": 1 } ]
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
       ]
     },
     "Merge": {
       "main": [
-        [ { "node": "Prepare News Text", "type": "main", "index": 0 } ]
+        [
+          {
+            "node": "Prepare News Text",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
     "Prepare News Text": {
       "main": [
-        [ { "node": "Summarize with Ollama", "type": "main", "index": 0 } ]
+        [
+          {
+            "node": "Summarize with Ollama",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
     "Summarize with Ollama": {
       "main": [
-        [ { "node": "Extract Summary", "type": "main", "index": 0 } ]
+        [
+          {
+            "node": "Extract Summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
     "Extract Summary": {
       "main": [
-        [ { "node": "Send to Discord", "type": "main", "index": 0 } ]
+        [
+          {
+            "node": "Send to Discord",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     }
   },
   "active": false,
-  "settings": { "executionOrder": "v1" },
+  "settings": {
+    "executionOrder": "v1"
+  },
   "pinData": {},
   "meta": {},
   "tags": []

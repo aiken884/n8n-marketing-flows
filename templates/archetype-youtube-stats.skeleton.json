@@ -13,7 +13,10 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
-      "position": [180, 120]
+      "position": [
+        180,
+        120
+      ]
     },
     {
       "parameters": {},
@@ -21,7 +24,10 @@
       "name": "When clicking Execute",
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
-      "position": [240, 460]
+      "position": [
+        240,
+        460
+      ]
     },
     {
       "parameters": {
@@ -33,7 +39,10 @@
       "name": "Fetch YouTube Stats",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [460, 460]
+      "position": [
+        460,
+        460
+      ]
     },
     {
       "parameters": {
@@ -43,7 +52,10 @@
       "name": "Build Prompt",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [680, 460]
+      "position": [
+        680,
+        460
+      ]
     },
     {
       "parameters": {
@@ -51,14 +63,19 @@
         "url": "http://host.docker.internal:11434/api/chat",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ model: 'qwen2.5:latest', messages: [ { role: 'user', content: $json.prompt } ], stream: false }) }}",
-        "options": { "timeout": 180000 }
+        "jsonBody": "={{ JSON.stringify({ model: 'qwen2.5:latest', messages: [ { role: 'system', content: '你是台灣人，一律使用台灣繁體中文與台灣慣用語回覆，絕對不要出現任何簡體字或中國用語。' }, { role: 'user', content: $json.prompt } ], stream: false }) }}",
+        "options": {
+          "timeout": 180000
+        }
       },
       "id": "node-ollama",
       "name": "Analyze with Ollama",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [900, 460]
+      "position": [
+        900,
+        460
+      ]
     },
     {
       "parameters": {
@@ -68,17 +85,62 @@
       "name": "Result",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [1120, 460]
+      "position": [
+        1120,
+        460
+      ]
     }
   ],
   "connections": {
-    "When clicking Execute": { "main": [ [ { "node": "Fetch YouTube Stats", "type": "main", "index": 0 } ] ] },
-    "Fetch YouTube Stats": { "main": [ [ { "node": "Build Prompt", "type": "main", "index": 0 } ] ] },
-    "Build Prompt": { "main": [ [ { "node": "Analyze with Ollama", "type": "main", "index": 0 } ] ] },
-    "Analyze with Ollama": { "main": [ [ { "node": "Result", "type": "main", "index": 0 } ] ] }
+    "When clicking Execute": {
+      "main": [
+        [
+          {
+            "node": "Fetch YouTube Stats",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch YouTube Stats": {
+      "main": [
+        [
+          {
+            "node": "Build Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Prompt": {
+      "main": [
+        [
+          {
+            "node": "Analyze with Ollama",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analyze with Ollama": {
+      "main": [
+        [
+          {
+            "node": "Result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
   },
   "active": false,
-  "settings": { "executionOrder": "v1" },
+  "settings": {
+    "executionOrder": "v1"
+  },
   "pinData": {},
   "meta": {},
   "tags": []

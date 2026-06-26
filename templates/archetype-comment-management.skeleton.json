@@ -13,31 +13,54 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
-      "position": [180, 120]
+      "position": [
+        180,
+        120
+      ]
     },
     {
       "parameters": {
-        "rule": { "interval": [ { "field": "cronExpression", "expression": "0 */6 * * *" } ] }
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 */6 * * *"
+            }
+          ]
+        }
       },
       "id": "node-schedule",
       "name": "Schedule Trigger",
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
-      "position": [240, 460]
+      "position": [
+        240,
+        460
+      ]
     },
     {
       "parameters": {
         "method": "GET",
         "url": "https://graph.facebook.com/v21.0/YOUR_POST_ID/comments?fields=from,message,created_time",
         "sendQuery": true,
-        "queryParameters": { "parameters": [ { "name": "access_token", "value": "YOUR_ACCESS_TOKEN" } ] },
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "access_token",
+              "value": "YOUR_ACCESS_TOKEN"
+            }
+          ]
+        },
         "options": {}
       },
       "id": "node-fetch",
       "name": "Fetch Comments",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [460, 460]
+      "position": [
+        460,
+        460
+      ]
     },
     {
       "parameters": {
@@ -47,7 +70,10 @@
       "name": "Build Prompt",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [680, 460]
+      "position": [
+        680,
+        460
+      ]
     },
     {
       "parameters": {
@@ -55,14 +81,19 @@
         "url": "http://host.docker.internal:11434/api/chat",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ model: 'qwen2.5:latest', messages: [ { role: 'user', content: $json.prompt } ], stream: false }) }}",
-        "options": { "timeout": 180000 }
+        "jsonBody": "={{ JSON.stringify({ model: 'qwen2.5:latest', messages: [ { role: 'system', content: '你是台灣人，一律使用台灣繁體中文與台灣慣用語回覆，絕對不要出現任何簡體字或中國用語。' }, { role: 'user', content: $json.prompt } ], stream: false }) }}",
+        "options": {
+          "timeout": 180000
+        }
       },
       "id": "node-ollama",
       "name": "Analyze with Ollama",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [900, 460]
+      "position": [
+        900,
+        460
+      ]
     },
     {
       "parameters": {
@@ -72,7 +103,10 @@
       "name": "Extract Result",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [1120, 460]
+      "position": [
+        1120,
+        460
+      ]
     },
     {
       "parameters": {
@@ -87,18 +121,73 @@
       "name": "Send to Discord",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [1340, 460]
+      "position": [
+        1340,
+        460
+      ]
     }
   ],
   "connections": {
-    "Schedule Trigger": { "main": [ [ { "node": "Fetch Comments", "type": "main", "index": 0 } ] ] },
-    "Fetch Comments": { "main": [ [ { "node": "Build Prompt", "type": "main", "index": 0 } ] ] },
-    "Build Prompt": { "main": [ [ { "node": "Analyze with Ollama", "type": "main", "index": 0 } ] ] },
-    "Analyze with Ollama": { "main": [ [ { "node": "Extract Result", "type": "main", "index": 0 } ] ] },
-    "Extract Result": { "main": [ [ { "node": "Send to Discord", "type": "main", "index": 0 } ] ] }
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Fetch Comments",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Comments": {
+      "main": [
+        [
+          {
+            "node": "Build Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Prompt": {
+      "main": [
+        [
+          {
+            "node": "Analyze with Ollama",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analyze with Ollama": {
+      "main": [
+        [
+          {
+            "node": "Extract Result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Result": {
+      "main": [
+        [
+          {
+            "node": "Send to Discord",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
   },
   "active": false,
-  "settings": { "executionOrder": "v1" },
+  "settings": {
+    "executionOrder": "v1"
+  },
   "pinData": {},
   "meta": {},
   "tags": []
