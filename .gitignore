@@ -1,0 +1,9 @@
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Keep YOUR filled-in copies (real keys / webhooks) out of git.
+# Convention: save configured workflows as *.private.json
+*.private.json
+*.local.json
+.env
